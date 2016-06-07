@@ -1,0 +1,72 @@
+# Authors: Antonio Garza, Karen L Clark, Marie Frantz Wallmark, Salnave Saint-Fort
+
+# Get the current working directory
+getwd()
+"C:/SMU/MSDS_6306/Unit4"
+
+# Install packages plyr 
+install.packages("plyr")
+
+# Load packages plyr and gdata into R
+library(plyr)
+library(gdata)
+
+# Read the raw data from rollingsales_queens.xls into variable queens
+## Need to download the perl interpreter for Windows.  http://strawberryperl.com/
+queens <- read.xls("rollingsales_queens.xls", pattern = "BOROUGH", perl = "C:/Strawberry/perl/bin/perl.exe")
+
+# View the data
+ head(queens)
+
+ # Explore the data 
+ str(queens)
+ 
+ summary(queens)
+ 
+#  Clean/Format the data with regular expressions
+queens$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]", "", queens$SALE.PRICE))
+
+#Count the number of missing value in SALE.PRICE.N
+count(is.na(queens$SALE.PRICE.N))
+
+#Convert all the labels in the data to lower case.
+names(queens) <- tolower(names(queens))
+
+## Clean/Format the data with regular expressions
+queens$gross.sqft <- as.numeric(gsub("[^[:digit:]]", "", queens$gross.square.feet))
+
+queens$land.sqft <- as.numeric(gsub("[^[:digit:]]", "", queens$land.square.feet))
+
+# Convert sale.date to date and year.built to character string
+
+queens$sale.date <- as.Date(queens$sale.date)
+queens$year.built <- as.numeric(as.character((queens$year.built)))
+
+## do a bit of exploration to make sure there's not anything
+## weird going on with sale prices
+attach(queens)
+hist(sale.price.n)
+hist(sale.price.n[sale.price.n > 0])
+hist(gross.sqft[sale.price.n == 0])
+detach(queens)
+
+## Keep only the actual sales
+queens.sale <- queens[queens$sales.price.n != 0,]
+
+plot(queens.sale$gross.sqft, queens.sale$sale.price.n)
+plot(log(queens.sale$gross.sqft), log(queens.sale$sale.price.n))
+
+## For now, let's look at 1-, 2-, and  3-family homes
+queens.homes <- queens.sale[which(grepl("FAMILY", queens.sale$building.class.category)),]
+
+plot(log(queens.homes$gross.square.feet), log(queens.homes$sale.price.n))
+
+queens.homes[which(queens.homes$sales.price.n < 100000),][order(queens.homes[which(queens.homes$sale.price.n < 1000000),] $sale.price.n),] 
+
+## remove outliers that seem like they weren't actual sales
+queens.homes$outliers <- (log(queens.homes$sale.price.n) <= 5) + 0
+queens.homes <-  queens.homes[which(queens.homes$outliers == 0),]
+
+plot(log(queens.homes$gross.sqft), log(queens.homes$sale.price.n))
+
+
