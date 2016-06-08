@@ -85,10 +85,6 @@ Queens.homes <- Queens.sale[which(grepl("FAMILY",Queens.sale$building.class.cate
 Queens.homes$outliers <- (log(Queens.homes$sale.price.n) <=5) + 0
 Queens.homes <- Queens.homes[which(Queens.homes$outliers==0),]
 
-Final File Layout:
-
-
-
 Analysis:
 
 Conclusion:
