@@ -84,13 +84,13 @@ loaded via a namespace (and not attached):
 
 -Changed Sales.Price to a numeric variable type instead of a Factor. Also used the pattern “[^[:digit:]]” to identify members of the variable that started with digits and replace them with nothing.
 
-Queens$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", Queens$SALE.PRICE))
+    Queens$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", Queens$SALE.PRICE))
 
 -Count all instances where Sales.Price value is NA
 
-count(is.na(Queens$SALE.PRICE.N)) 
+    count(is.na(Queens$SALE.PRICE.N)) 
 
--Change all variable names to lower case
+- Change all variable names to lower case
 
     names(Queens) <- tolower(names(Queens))
 
