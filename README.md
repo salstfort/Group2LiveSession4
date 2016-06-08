@@ -79,13 +79,16 @@ loaded via a namespace (and not attached):
 [13] DBI_0.4          gtools_3.5.0     htmltools_0.3.5  yaml_2.1.13      lazyeval_0.1.10  digest_0.6.9    
 [19] assertthat_0.1   rmarkdown_0.9.6  stringi_1.0-1    scales_0.4.0  
 
+Required R Packages:
 
-Data Cleanup was completed all documentation and code executed is in the Data folder in then AGarzaKLClarkMFWallmarkSSaintFort_RCleanupCode.txt. file
+plyr and gdata
 
-Completed Analysis is detailed in the Analysis folder in Week_4_Group_Project_Analysis.md file.  
+Data Cleanup was completed all documentation and code executed is in the Data folder in the AGarzaKLClarkMFWallmarkSSaintFort_RCleanupCode.txt. file
+
+Completed Analysis is detailed in the Analysis folder in the Week_4_Group_Project_Analysis.md file.  The Analysis folder contains several plots to describe the data and its reaction when data cleansing tools were applied via R to the dataset.
 
 Conclusion:
-The focus of the analysis was comparing the Gross Square Foot to the Sales Price of 1, 2, and 3 Family homes. The original data was right skewed so a log transformation of 10 was applied to the dataset to correct this.
+The focus of the analysis was comparing the Gross Square Feet to the Sales Price of 1, 2, and 3 Family homes. The original data was right skewed so a log transformation of 10 was applied to the dataset to correct this.
 
 
 Copyright:
