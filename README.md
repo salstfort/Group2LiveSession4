@@ -1,6 +1,7 @@
 # Group2LiveSession4
 
 Project: Group 2 Live Session 4 Assignment
+
 Group 2 Live Session 4 members: Antonio Garza, Karen Clark, Marie Wallmark, Salnave Saint-Fort
 
 Description of Project:
