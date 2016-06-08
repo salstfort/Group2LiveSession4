@@ -87,6 +87,8 @@ Data Cleanup was completed all documentation and code executed is in the Data fo
 
 Completed Analysis is detailed in the Analysis folder in the Week_4_Group_Project_Analysis.md file.  The Analysis folder contains several plots to describe the data and its reaction when data cleansing tools were applied via R to the dataset.
 
+The paper folder contains a file  - Group Project Homework 4.rtf - that describes patterns that were seen in the dataset before and after data cleansing
+
 Conclusion:
 The focus of the analysis was comparing the Gross Square Feet to the Sales Price of 1, 2, and 3 Family homes. The original data was right skewed so a log transformation of 10 was applied to the dataset to correct this.
 
