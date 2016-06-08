@@ -1,0 +1,100 @@
+---
+title: "Week 4 Group Project Using Queens Data"
+author: "Group2 - Tony Garza"
+date: "June 8, 2016"
+output: 
+  html_document:
+    keep_md: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown Analysis Report
+
+This is the code used to both scrub and analyze the data. This R Markdown document will culminate with a series of plots using the Queens data. The plots will be used to determine any potential patterns as well as whether or not we are working with a normal distribution at all.
+
+##Load the Data
+```{r echo=TRUE}
+require(plyr)
+require(gdata)
+# Read the raw data from rollingsales_queens.xls into variable queens
+## Need to download the perl interpreter for Windows (ran this one on a Mac though).  http://strawberryperl.com/
+queens <- read.xls("rollingsales_queens.xls", pattern = "BOROUGH")
+```
+##Explore the Data
+Let's view the data to make sure it loaded correctly.
+```{r}
+head(queens)
+```
+Let's continue to explore the data:
+```{r}
+str(queens)
+summary(queens)
+```
+##Clean the Data
+Now let's start cleaning up the data: <br/>
+1. First let's convert all labels to lower case to make things easier/consistent.
+```{r}
+names(queens) <- tolower(names(queens))
+```
+2. Let's make sure our data is all numeric
+```{r}
+queens$sale.price.n <- as.numeric(gsub("[^[:digit:]]","", queens$sale.price))
+count(is.na(queens$sale.price.n))
+queens$gross.sqft <- as.numeric(gsub("[^[:digit:]]","",queens$gross.square.feet))
+count(is.na(queens$gross.square.feet))
+```
+3. Let's now keep only the actual sales:
+```{r}
+queens.sale <- queens[queens$sale.price.n!= 0,]
+summary(queens.sale)
+```
+4. This is still a lot of data points so let's also just look at 1-, 2-, and  3-family homes:
+```{r}
+queens.homes <- queens.sale[which(grepl("FAMILY", queens.sale$building.class.category)),]
+summary(queens.homes)
+```
+## Analyze and Plot the Data
+First let's see what our data looks like now and see if we should scrub the data more:
+```{r}
+qqplot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+```
+<br/>
+Looks like we still have quite a few outliers so let's clean the data further and re-plot:
+```{r}
+queens.homes$outliers <- log10(queens.homes$sale.price.n) <=5 +0
+queens.homes <- queens.homes[which(queens.homes$outliers == 0),]
+qqplot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+```
+<br/>
+This piece of the data looks to be close to a normal distribution. Let's try a regular plot to see where the data is tending.
+```{r}
+plot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+```
+<br/>
+Let's look at the distribution of the individual data sets of gross sqft and sale price:
+```{r}
+boxplot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+```
+<br/>
+Since we are receiving a warning about outliers in box plot one we may want to scrub the data further:
+```{r}
+queens.homes$outliers2 <- log10(queens.homes$gross.square.feet) <=2.8 +0
+queens.homes <- queens.homes[which(queens.homes$outliers2 == 0),]
+qqplot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+boxplot(log10(queens.homes$gross.square.feet),log10(queens.homes$sale.price.n))
+```
+<br/>
+No warnings this time. Here is some supporting data for the boxplots:
+```{r}
+summary(log10(queens.homes$gross.square.feet))
+summary(log10(queens.homes$sale.price.n))
+```
+<br/>
+Without the log10 correction you can see this data is naturally skewed to the left:
+```{r}
+hist(queens.homes$gross.square.feet)
+hist(queens.homes$sale.price.n)
+```
