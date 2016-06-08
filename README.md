@@ -80,20 +80,21 @@ loaded via a namespace (and not attached):
 [19] assertthat_0.1   rmarkdown_0.9.6  stringi_1.0-1    scales_0.4.0  
 
 
-Data Clean up
-1.	Changed Sales.Price to a numeric variable type instead of a Factor. Also used the pattern “[^[:digit:]]” to identify members of the variable that started with digits and replace them with nothing.
+--Data Clean up--
+
+-Changed Sales.Price to a numeric variable type instead of a Factor. Also used the pattern “[^[:digit:]]” to identify members of the variable that started with digits and replace them with nothing.
 
 Queens$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", Queens$SALE.PRICE))
 
-2.	Count all instances where Sales.Price value is NA
+-Count all instances where Sales.Price value is NA
 
 count(is.na(Queens$SALE.PRICE.N)) 
 
-3.	Change all variable names to lower case
+-Change all variable names to lower case
 
 names(Queens) <- tolower(names(Queens))
 
-4.	Remove leading zeros for Gross.Square.Feet, Land.Square.Feet, and Year.Built
+-Remove leading zeros for Gross.Square.Feet, Land.Square.Feet, and Year.Built
 
 Queens$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", Queens$gross.square.feet))
 
@@ -101,11 +102,11 @@ Queens$land.sqft <- as.numeric(gsub("[^[:digit:]]","", Queens$land.square.feet))
 
 Queens$year.built <- as.numeric(as.character(Queens$year.built))
 
-5.	Removed all zeros from the Sale.Price field and only keep actual sales
+- Removed all zeros from the Sale.Price field and only keep actual sales
 
 Queens.sale <- Queens[Queens$sale.price.n!=0,]
 
-6.	Removed Outliers that did not look like actual sales
+- Removed Outliers that did not look like actual sales
 
 •	First created a variable Queens.homes that included 1, 2, and 3 family homes – total 8146 observations
 
