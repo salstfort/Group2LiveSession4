@@ -18,55 +18,49 @@ queens <- read.xls("rollingsales_queens.xls", pattern = "BOROUGH", perl = "C:/St
 # View the data
  head(queens)
 
- # Explore the data 
- str(queens)
+# Explore the data 
+ str(queens) 
  
  summary(queens)
  
-#  Clean/Format the data with regular expressions
-queens$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]", "", queens$SALE.PRICE))
-
-#Count the number of missing value in SALE.PRICE.N
-count(is.na(queens$SALE.PRICE.N))
-
 #Convert all the labels in the data to lower case.
-names(queens) <- tolower(names(queens))
+names(queens) <- tolower(names(queens)
 
-## Clean/Format the data with regular expressions
+# Checking for missing values in the dataset for the two labels of concerned.
+count(is.na(queens$SALE.PRICE.N))
+count(is.na(queens$gross.sqft))
+
+## Converting the values to R numeric
 queens$gross.sqft <- as.numeric(gsub("[^[:digit:]]", "", queens$gross.square.feet))
 
-queens$land.sqft <- as.numeric(gsub("[^[:digit:]]", "", queens$land.square.feet))
-
-# Convert sale.date to date and year.built to character string
-
-queens$sale.date <- as.Date(queens$sale.date)
-queens$year.built <- as.numeric(as.character((queens$year.built)))
-
-## do a bit of exploration to make sure there's not anything
-## weird going on with sale prices
-attach(queens)
-hist(sale.price.n)
-hist(sale.price.n[sale.price.n > 0])
-hist(gross.sqft[sale.price.n == 0])
-detach(queens)
-
-## Keep only the actual sales
-queens.sale <- queens[queens$sales.price.n != 0,]
-
-plot(queens.sale$gross.sqft, queens.sale$sale.price.n)
-plot(log(queens.sale$gross.sqft), log(queens.sale$sale.price.n))
-
-## For now, let's look at 1-, 2-, and  3-family homes
-queens.homes <- queens.sale[which(grepl("FAMILY", queens.sale$building.class.category)),]
-
-plot(log(queens.homes$gross.square.feet), log(queens.homes$sale.price.n))
-
-queens.homes[which(queens.homes$sales.price.n < 100000),][order(queens.homes[which(queens.homes$sale.price.n < 1000000),] $sale.price.n),] 
-
-## remove outliers that seem like they weren't actual sales
-queens.homes$outliers <- (log(queens.homes$sale.price.n) <= 5) + 0
-queens.homes <-  queens.homes[which(queens.homes$outliers == 0),]
-
-plot(log(queens.homes$gross.sqft), log(queens.homes$sale.price.n))
+queens$sale.price.n <- as.numeric(gsub("[^[:digit:]]", "", queens$SALE.PRICE))
 
 
+# Creating vectors for queens gross square feet and queens sale price excluding the Zeros in the dataset
+salePriceClean <- queens$sale.price.n[queens$sale.price.n != 0]
+GrossSqftClean <- queens$gross.sqft[queens$gross.sqft !=0]
+
+# Summary of sale price and gross square feet after cleansing
+summary(salePriceClean)
+summary(GrossSqftClean)
+   
+# Creating a freqency table for sale price and gross square feet
+salePriceFreqTable <- table(salePriceClean)
+grossSqftFreqTable <- table(GrossSqftClean)
+
+# Histogram of gross square feet and sale price based on their respective frequency table
+hist(salePriceFreqTable, freq = TRUE, xlim = c(0, 250), ylim = c(0, 80), main = "Sale Price")
+hist(grossSqftFreqTable, freq = TRUE, xlim = c(0, 200), ylim = c(0, 80), main = "Gross Square Feet")
+
+# Transforming gross square feet and sale price due to heavy skewness of the data. 
+##(Note:  Since the data is positively skewed as observed in the histogram of their respective frequency table, we can perform a log transformation on it)
+grossSqftTransformation <- log(GrossSqftClean)
+salePriceTransformation <- log(salePriceClean)
+
+# Histogram of the transformation data
+## The histogram show that gross square feet display a normal distribution after transformation, whereas the sale price is still some what negative skewed after transformation
+hist(grossSqftTransformation)
+hist(salePriceTransformation)
+
+# Side by Side boxplot of sales force and gross square feet
+boxplot(grossSqftTransformation, salePriceTransformation, horizontal = TRUE, names = c("Gross Square Feet", "Sale Price"))
