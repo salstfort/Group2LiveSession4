@@ -94,7 +94,7 @@ count(is.na(Queens$SALE.PRICE.N))
 
 names(Queens) <- tolower(names(Queens))
 
--Remove leading zeros for Gross.Square.Feet, Land.Square.Feet, and Year.Built
+- Remove leading zeros for Gross.Square.Feet, Land.Square.Feet, and Year.Built
 
 Queens$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", Queens$gross.square.feet))
 
@@ -108,11 +108,11 @@ Queens.sale <- Queens[Queens$sale.price.n!=0,]
 
 - Removed Outliers that did not look like actual sales
 
-•	First created a variable Queens.homes that included 1, 2, and 3 family homes – total 8146 observations
+First created a variable Queens.homes that included 1, 2, and 3 family homes – total 8146 observations
 
 Queens.homes <- Queens.sale[which(grepl("FAMILY",Queens.sale$building.class.category)),]
 
-•	Then remove outliers from this dataset that do not look like actual sales
+Then remove outliers from this dataset that do not look like actual sales
 
 Queens.homes$outliers <- (log(Queens.homes$sale.price.n) <=5) + 0
 
