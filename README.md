@@ -85,7 +85,8 @@ Data Cleanup was completed all documentation and code executed is in the Data fo
 Completed Analysis is detailed in the Analysis folder in Week_4_Group_Project_Analysis.md file.  
 
 Conclusion:
-The focus of the analysis was comparing the Gross Square Foot to the Sales Price of 1, 2, and 3 bedroom homes witha  sales price 
+The focus of the analysis was comparing the Gross Square Foot to the Sales Price of 1, 2, and 3 Family homes. The original data was right skewed so a log transformation of 10 was applied to the dataset to correct this.
+
 
 Copyright:
 
