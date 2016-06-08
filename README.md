@@ -118,10 +118,12 @@ Removed Outliers that did not look like actual sales
 
     Queens.homes <- Queens.homes[which(Queens.homes$outliers==0),]
 
-Analysis:
+Copyright:
 
-Conclusion:
+Data was downloaded from http://www1.nyc.gov/home/search/index.page?search-terms=Rolling+sales+update website. 
 
+Code used to manipulate data was taken from
+"Doing Data Science - Straight Talk from the Frontline" by Cathy O'Neill and Rachel Schutt pages 48-50
 
 
 
