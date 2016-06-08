@@ -11,7 +11,7 @@ First we downloaded the rollingsales_queens.xls file.  The team reviewed the raw
 
 The rollingsales_queens.xls file was saved as a comma separated file.
 
-Queens <- read.csv("C:\\Users\\kclark\\Personal\\SMU\\Doing Data Science MSDS 6306\\Unit 4\\rollingsales_queens.csv",skip=4,header=TRUE)
+Queens <- read.csv("YOUR WORKING DIRECTORY\\rollingsales_queens.csv",skip=4,header=TRUE)
 
 Elements of Data File - Original
 
@@ -80,7 +80,7 @@ loaded via a namespace (and not attached):
 [19] assertthat_0.1   rmarkdown_0.9.6  stringi_1.0-1    scales_0.4.0  
 
 
---Data Clean up--
+Data Cleanup was completed
 
 -Changed Sales.Price to a numeric variable type instead of a Factor. Also used the pattern “[^[:digit:]]” to identify members of the variable that started with digits and replace them with nothing.
 
