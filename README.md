@@ -82,7 +82,9 @@ loaded via a namespace (and not attached):
 
 Data Cleanup was completed all documentation and code executed is in the Data folder in then AGarzaKLClarkMFWallmarkSSaintFort_RCleanupCode.txt. file
 
-Completed Analysis is detailed in the 
+Completed Analysis is detailed in the Analysis folder in Week_4_Group_Project_Analysis.md file.  
+
+Conclusion:
 
 Copyright:
 
